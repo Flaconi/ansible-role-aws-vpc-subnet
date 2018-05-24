@@ -1,0 +1,23 @@
+---
+
+#
+# Assert that required vpc_filter element is present
+- name: ensure vpc_subnets array is defined correctly
+  assert:
+    that:
+      - vpc.vpc_filter is defined
+    msg: "aws_vpc_subnets[x].vpc_filter not defined, but required to lookup vpc"
+
+
+# Returns:
+# * aws_vpc_igw_vpc_id
+# * aws_vpc_igw_vpc_cidr
+- include_tasks: gather_facts_vpc.yml
+
+
+# Now loop over all subnets for the current VPC
+- include_tasks: create_vpc_subnet.yml
+  loop_control:
+    loop_var: subnet
+  with_items:
+    - "{{ vpc.subnets }}"
