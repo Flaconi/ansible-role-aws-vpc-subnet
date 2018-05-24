@@ -1,0 +1,13 @@
+---
+
+###
+### Main entrypoint
+###
+### Note: This is the outer loop, that goes over all vpc's (by vpc_filter).
+###       Each VPC may then contain more than one subnet (inner loop).
+###
+- include_tasks: create_vpc_subnets.yml
+  loop_control:
+    loop_var: vpc
+  with_items:
+    - "{{ aws_vpc_subnets }}"
