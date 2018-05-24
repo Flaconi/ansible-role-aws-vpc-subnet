@@ -7,7 +7,7 @@
     security_token: "{{ lookup('ENV', 'AWS_SECURITY_TOKEN') | default(omit) }}"
     profile: "{{ aws_vpc_subnet_profile | default(omit) }}"
     region: "{{ vpc.region | default(aws_vpc_subnet_default_region) }}"
-    filters: "{{ vpc.vpc_filter | default({}) | get_attr('key', 'val') }}"
+    filters: "{{ vpc.vpc_filter | get_attr('key', 'val') }}"
   register: _vpc_subnet_vpc
 
 - name: fail if vpc was not found
