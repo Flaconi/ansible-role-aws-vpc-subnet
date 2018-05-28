@@ -3,6 +3,8 @@
 This role handles the creation of VPC subnets in AWS.
 
 [![Build Status](https://travis-ci.org/Flaconi/ansible-role-aws-vpc-subnet.svg?branch=master)](https://travis-ci.org/Flaconi/ansible-role-aws-vpc-subnet)
+[![Version](https://img.shields.io/github/tag/Flaconi/ansible-role-aws-vpc-subnet.svg)](https://github.com/Flaconi/ansible-role-aws-vpc-subnet/tags)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/d/25921.svg)](https://galaxy.ansible.com/Flaconi/aws-vpc-subnet/)
 
 ## Requirements
 
