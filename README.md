@@ -13,9 +13,11 @@ This role handles the creation of VPC subnets in AWS.
 
 Additional variables that can be used (either as `host_vars`/`group_vars` or via command line args):
 
-| Variable              | Description                     |
-|-----------------------|---------------------------------|
-| `aws_vpc_subnet_profile` | Boto profile name to be used |
+| Variable                        | Description                     |
+|---------------------------------|---------------------------------|
+| `aws_vpc_subnet_profile`        | Boto profile name to be used    |
+| `aws_vpc_subnet_default_region` | Default region to use           |
+| `aws_vpc_subnet_default_public` | Default visibility of subnets   |
 
 
 ## Example definition
@@ -24,6 +26,12 @@ Additional variables that can be used (either as `host_vars`/`group_vars` or via
 
 ```yml
 aws_vpc_subnets:
+  # Create subnets for a VPC by VPC name
+  - vpc_name: devops-test-vpc
+    subnets:
+      - cidr: 172.29.1.0/24
+      - cidr: 172.29.2.0/24
+  # Create subnets for a VPC by VPC filter
   - vpc_filter:
       - key: "tag:Name"
         val: "devops-test-vpc"
@@ -35,6 +43,31 @@ aws_vpc_subnets:
 #### All available parameter
 ```yml
 aws_vpc_subnets:
+  # Create subnets for a VPC by VPC name
+  - vpc_name: devops-test-vpc
+    region: eu-central-1
+    subnets:
+      - cidr: 172.29.1.0./24
+        az: a
+        public: True
+        tags:
+          - key: Name
+            val: devops-test-subnet-a
+          - key: env
+            val: playground
+          - key: department
+            val: devops
+      - cidr: 172.29.2.0./24
+        az: b
+        public: True
+        tags:
+          - key: Name
+            val: devops-test-subnet-b
+          - key: env
+            val: playground
+          - key: department
+            val: devops
+  # Create subnets for a VPC by VPC name
   - vpc_filter:
       - key: "tag:Name"
         val: "devops-test-vpc"
