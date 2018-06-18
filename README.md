@@ -15,12 +15,12 @@ This role handles the creation of VPC subnets in AWS.
 
 Additional variables that can be used (either as `host_vars`/`group_vars` or via command line args):
 
-| Variable                        | Description                     |
-|---------------------------------|---------------------------------|
-| `aws_vpc_subnet_profile`        | Boto profile name to be used    |
-| `aws_vpc_subnet_default_region` | Default region to use           |
-| `aws_vpc_subnet_default_public` | Default visibility of subnets   |
-
+| Variable                               | Description                     |
+|----------------------------------------|---------------------------------|
+| `aws_vpc_subnet_profile`               | Boto profile name to be used    |
+| `aws_vpc_subnet_default_region`        | Default region to use           |
+| `aws_vpc_subnet_default_public`        | Default visibility of subnets   |
+| `aws_vpc_subnet_vpc_filter_additional` | Additional `key` `val` filter to add to `vpc_filter` and `vpc_name` by default. |
 
 ## Example definition
 
@@ -31,15 +31,19 @@ aws_vpc_subnets:
   # Create subnets for a VPC by VPC name
   - vpc_name: devops-test-vpc
     subnets:
-      - cidr: 172.29.1.0/24
-      - cidr: 172.29.2.0/24
+      - name: subnet-1
+        cidr: 172.29.1.0/24
+      - name: subnet-2
+        cidr: 172.29.2.0/24
   # Create subnets for a VPC by VPC filter
   - vpc_filter:
       - key: "tag:Name"
         val: "devops-test-vpc"
     subnets:
-      - cidr: 172.29.1.0/24
-      - cidr: 172.29.2.0/24
+      - name: subnet-1
+        cidr: 172.29.1.0/24
+      - name: subnet-2
+        cidr: 172.29.2.0/24
 ```
 
 #### All available parameter
@@ -49,22 +53,20 @@ aws_vpc_subnets:
   - vpc_name: devops-test-vpc
     region: eu-central-1
     subnets:
-      - cidr: 172.29.1.0./24
+      - name: subnet-1
+        cidr: 172.29.1.0./24
         az: a
         public: True
         tags:
-          - key: Name
-            val: devops-test-subnet-a
           - key: env
             val: playground
           - key: department
             val: devops
-      - cidr: 172.29.2.0./24
+      - name: subnet-2
+        cidr: 172.29.2.0./24
         az: b
         public: True
         tags:
-          - key: Name
-            val: devops-test-subnet-b
           - key: env
             val: playground
           - key: department
@@ -79,17 +81,17 @@ aws_vpc_subnets:
         val: devops
     region: eu-central-1
     subnets:
-      - cidr: 172.29.1.0./24
+      - name: subnet-1
+        cidr: 172.29.1.0./24
         az: a
         public: True
         tags:
-          - key: Name
-            val: devops-test-subnet-a
           - key: env
             val: playground
           - key: department
             val: devops
-      - cidr: 172.29.2.0./24
+      - name: subnet-2
+        cidr: 172.29.2.0./24
         az: b
         public: True
         tags:
@@ -99,4 +101,25 @@ aws_vpc_subnets:
             val: playground
           - key: department
             val: devops
+```
+
+
+## Testing
+
+#### Requirements
+
+* Docker
+* [yamllint](https://github.com/adrienverge/yamllint)
+
+#### Run tests
+
+```bash
+# Lint the source files
+make lint
+
+# Run integration tests with default Ansible version
+make test
+
+# Run integration tests with custom Ansible version
+make test ANSIBLE_VERSION=2.4
 ```

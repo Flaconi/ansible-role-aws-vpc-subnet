@@ -7,4 +7,6 @@
 aws_vpc_subnet_default_region: eu-central-1
 aws_vpc_subnet_default_public: False
 
+aws_vpc_subnet_vpc_filter_additional: []
+
 aws_vpc_subnets: []

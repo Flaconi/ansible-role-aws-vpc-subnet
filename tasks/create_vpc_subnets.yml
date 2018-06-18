@@ -1,6 +1,5 @@
 ---
 
-#
 # Assert that required vpc_filter element is present
 - name: ensure vpc_subnets array is defined correctly
   assert:
