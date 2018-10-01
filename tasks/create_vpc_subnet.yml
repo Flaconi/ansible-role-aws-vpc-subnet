@@ -34,8 +34,8 @@
     # Looked-up values
     vpc_id: "{{ aws_vpc_subnet_vpc_id }}"
     cidr: "{{ subnet.cidr }}"
-    # Optional values
-    az: "{{ subnet.region | default(aws_vpc_subnet_default_region) }}{{ subnet.az | default(omit) }}"
+    # Optional values    
+    az: "{{ subnet.az | default(omit) }}"
     map_public: "{{ subnet.public | default(aws_vpc_subnet_default_public) }}"
     tags: "{{ _aws_vpc_subnet_tags | get_attr('key', 'val') }}"
     region: "{{ vpc.region | default(aws_vpc_subnet_default_region | default(omit)) }}"
